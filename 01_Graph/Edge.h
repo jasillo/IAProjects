@@ -8,8 +8,13 @@ using namespace std;
 class Edge
 {
 public:
-	Edge(float d);
+	Edge(float d, Node *a, Node *b);
 	~Edge();
+	void clear();
+	void setDistance(float w);
+	bool isMyNode(Node *a);
+	
+private:
 	vector<Node *> myNodes;
 	int distance;
 };

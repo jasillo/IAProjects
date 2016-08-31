@@ -11,10 +11,14 @@ class Edge;
 class Node
 {
 public:
-	Node(glm::vec2 data);
+	Node(glm::vec2 d);
 	~Node();
-	glm::vec2 point;
-	vector<Edge *> myEdges;
+	Edge* findEdge(Node* a);
+	void clear();
+	glm::vec2 getData();
 
+private:
+	glm::vec2 data;
+	vector<Edge *> myEdges;
 };
 
