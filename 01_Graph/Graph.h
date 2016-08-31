@@ -18,5 +18,6 @@ private:
 	vector<Node *> myNodes;
 
 	Node* findNode(glm::vec2 a);
+
 };
 

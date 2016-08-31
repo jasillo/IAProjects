@@ -16,6 +16,7 @@ public:
 	Edge* findEdge(Node* a);
 	void clear();
 	glm::vec2 getData();
+	void addEdge(Edge* e);
 
 private:
 	glm::vec2 data;

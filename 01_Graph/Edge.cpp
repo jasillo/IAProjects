@@ -2,8 +2,8 @@
 
 
 Edge::Edge(float d, Node *a, Node *b): distance(d){
-	myNodes[0] = a;
-	myNodes[1] = b;
+	myNodes.push_back(a);
+	myNodes.push_back(a);
 }
 
 Edge::~Edge() {
