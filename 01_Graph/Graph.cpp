@@ -1,7 +1,11 @@
 #include "Graph.h"
 
 
+
 Graph::~Graph() {
+	starNode = nullptr;
+	endNode = nullptr;
+
 	for (Edge* e : myEdges)
 		e->clear();
 	for (Node* n : myNodes)
@@ -28,7 +32,7 @@ bool Graph::insert(glm::vec2 a, glm::vec2 b, float w)
 		n2 = new Node(b);
 		myNodes.push_back(n2);
 	}
-			
+
 	//se busca la arista, si existe se sobreescribe el peso
 	Edge* e = n1->findEdge(n2);
 	if (e)
@@ -42,6 +46,54 @@ bool Graph::insert(glm::vec2 a, glm::vec2 b, float w)
 	}
 		
 	return true;
+}
+
+void Graph::draw()
+{
+	//glutSolidSphere(1, 10, 10);
+	for (Node* n : myNodes)
+	{
+		if (n->selected)
+			glColor3f(1, 0, 0);
+		else
+			glColor3f(1, 1, 1);
+		glm::vec2 p = n->getData();
+		glPushMatrix();
+		glTranslatef(p.x,p.y,0);
+		glutSolidSphere(2, 15, 15);
+		glPopMatrix();
+	}
+	
+	
+	glBegin(GL_LINES);
+	for (Edge* e : myEdges) {
+		if (e->selected)
+			glColor3f(1, 0, 0);
+		else
+			glColor3f(1, 1, 1);
+		glm::vec2 p1 = e->getNode(0);
+		glm::vec2 p2 = e->getNode(1);
+		
+		glVertex3f(p1.x, p1.y, 0);
+		glVertex3f(p2.x, p2.y, 0);
+		
+	}
+	glEnd();
+
+}
+
+void Graph::deepSearch()
+{
+	if (!starNode || !endNode)
+		return;
+}
+
+void Graph::aStarSearch()
+{
+	if (!starNode || !endNode)
+		return;
+	Node* n1 = starNode;
+	
 }
 
 Node * Graph::findNode(glm::vec2 a)

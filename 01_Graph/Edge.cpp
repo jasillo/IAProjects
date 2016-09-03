@@ -3,7 +3,8 @@
 
 Edge::Edge(float d, Node *a, Node *b): distance(d){
 	myNodes.push_back(a);
-	myNodes.push_back(a);
+	myNodes.push_back(b);
+	selected = false;
 }
 
 Edge::~Edge() {
@@ -23,6 +24,11 @@ void Edge::setDistance(float w)
 bool Edge::isMyNode(Node * a)
 {
 	return (a == myNodes[0] || a == myNodes[1]);
+}
+
+glm::vec2 Edge::getNode(int i)
+{
+	return myNodes[i]->getData();
 }
 
 

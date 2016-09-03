@@ -2,8 +2,9 @@
 
 
 Node::Node(glm::vec2 d): data(d) {
-	
+	selected = false;
 }
+
 Node::~Node() {
 	myEdges.clear();
  }

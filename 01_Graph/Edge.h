@@ -13,6 +13,8 @@ public:
 	void clear();
 	void setDistance(float w);
 	bool isMyNode(Node *a);
+	glm::vec2 getNode(int i);
+	bool selected;
 	
 private:
 	vector<Node *> myNodes;

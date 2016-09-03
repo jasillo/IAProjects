@@ -18,6 +18,7 @@ public:
 	glm::vec2 getData();
 	void addEdge(Edge* e);
 
+	bool selected;
 private:
 	glm::vec2 data;
 	vector<Edge *> myEdges;
