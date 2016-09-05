@@ -19,6 +19,8 @@ public:
 	void addEdge(Edge* e);
 
 	bool selected;
+	bool visited;
+	Node* getNodeNotSelected();
 private:
 	glm::vec2 data;
 	vector<Edge *> myEdges;

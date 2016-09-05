@@ -15,6 +15,8 @@ public:
 	bool isMyNode(Node *a);
 	glm::vec2 getNode(int i);
 	bool selected;
+	Node* getNodeDiferent(Node* n);
+	int getDistance();
 	
 private:
 	vector<Node *> myNodes;

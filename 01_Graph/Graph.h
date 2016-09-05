@@ -9,6 +9,7 @@
 #include <GL\glut.h>
 
 #include <iostream>
+#include <queue>
 
 using namespace std;
 
@@ -20,6 +21,8 @@ public:
 	bool insert(glm::vec2 a, glm::vec2 b, float w);	
 	void draw();
 	void setPoint(float x, float y);
+	void deepSearch();
+	void aStarSearch();
 
 private:
 	vector<Edge *> myEdges;
@@ -27,8 +30,6 @@ private:
 	Node * startNode;
 	Node * endNode;
 
-	Node* findNode(glm::vec2 a);
-	void deepSearch();
-	void aStarSearch();
+	Node* findNode(glm::vec2 a);	
 };
 

@@ -104,6 +104,33 @@ void Graph::deepSearch()
 {
 	if (!startNode || !endNode)
 		return;
+	for (Edge *e : myEdges)
+		e->selected = false;
+	for (Node *n : myNodes)
+		n->visited = false;
+
+	vector<Node*> route;
+	route.push_back(startNode);
+	startNode->visited = true;
+
+	while (!route.empty() && route.back() != endNode) {
+		Node *n = route.back()->getNodeNotSelected();		
+		if (n) {
+			route.push_back(n);
+			n->visited = true;
+		}			
+		else 
+			route.pop_back();
+	}
+	float cost = 0;
+	if (!route.empty()) {
+		for (int i = 0; i < route.size() - 1; ++i) {
+			Edge *e = route[i]->findEdge(route[i + 1]);
+			e->selected = true;
+			cost += e->getDistance();
+		}
+	}
+	cout << "costo = " << cost << endl;
 }
 
 void Graph::aStarSearch()

@@ -31,4 +31,17 @@ glm::vec2 Edge::getNode(int i)
 	return myNodes[i]->getData();
 }
 
+Node * Edge::getNodeDiferent(Node * n)
+{
+	if (n != myNodes[0])
+		return myNodes[0];
+	else
+		return myNodes[1];
+}
+
+int Edge::getDistance()
+{
+	return distance;
+}
+
 

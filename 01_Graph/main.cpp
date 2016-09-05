@@ -109,6 +109,9 @@ GLvoid window_key(unsigned char key, int x, int y)
 	case ECHAP:
 		exit(1);
 		break;
+	case 'p':
+		a.deepSearch();
+		break;
 	default:
 		printf("La touche %d non active.\n", key);
 		break;
