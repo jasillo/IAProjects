@@ -3,7 +3,7 @@
 
 
 Graph::~Graph() {
-	starNode = nullptr;
+	startNode = nullptr;
 	endNode = nullptr;
 
 	for (Edge* e : myEdges)
@@ -63,8 +63,9 @@ void Graph::draw()
 		glutSolidSphere(2, 15, 15);
 		glPopMatrix();
 	}
-	
-	
+
+	glLineWidth(2);
+		
 	glBegin(GL_LINES);
 	for (Edge* e : myEdges) {
 		if (e->selected)
@@ -82,17 +83,34 @@ void Graph::draw()
 
 }
 
+void Graph::setPoint(float x, float y)
+{
+	for (Node* n : myNodes) {
+		glm::vec2 p = n->getData();
+		if (glm::length(glm::distance(p, glm::vec2(x, y))) < 2) {
+			if (endNode)
+				endNode->selected = false;
+			endNode = startNode;
+			startNode = n;
+			startNode->selected = true;
+			if (endNode)
+				endNode->selected = true;
+			return;
+		}			
+	}		
+}
+
 void Graph::deepSearch()
 {
-	if (!starNode || !endNode)
+	if (!startNode || !endNode)
 		return;
 }
 
 void Graph::aStarSearch()
 {
-	if (!starNode || !endNode)
+	if (!startNode || !endNode)
 		return;
-	Node* n1 = starNode;
+	Node* n1 = startNode;
 	
 }
 

@@ -26,7 +26,7 @@ using namespace std;
 std::default_random_engine random_engine;
 
 Graph a;
-
+int WIDTH = 800 , HEIGHT = 600;
 
 void init_scene();
 GLvoid initGL();
@@ -38,48 +38,40 @@ GLvoid window_idle();
 
 int main(int argc, char **argv)
 {
-	std::mt19937 mt(random_engine());
-	
+	std::mt19937 mt(random_engine());	
 	
 	//1
 	a.insert(glm::vec2(-15, 15), glm::vec2( -15, -15), 20);
 	a.insert(glm::vec2(-15, 15), glm::vec2(-8,-2 ), 12);
 	a.insert(glm::vec2(-15, 15), glm::vec2(-5,10 ), 9);
-
 	//2
 	a.insert(glm::vec2(-15, -15), glm::vec2(-8,-2 ), 11);
 	a.insert(glm::vec2(-15, -15), glm::vec2(-2,-12 ), 13);
-
 	//3
 	a.insert(glm::vec2(-8, -2), glm::vec2(-5,10 ), 3);
 	a.insert(glm::vec2(-8, -2), glm::vec2(8,5 ), 17);
 	a.insert(glm::vec2(-8, -2), glm::vec2(-2,-12 ), 4);
-
 	//4
 	a.insert(glm::vec2(-5,10 ), glm::vec2(5, 18), 10);
-
 	//5
 	a.insert(glm::vec2(-2,-12), glm::vec2(8, -17), 6);
-
 	//6
 	a.insert(glm::vec2(5,18 ), glm::vec2(14,15 ), 8);
 	a.insert(glm::vec2(5, 18), glm::vec2(8,5 ), 7);
-
 	//7
 	a.insert(glm::vec2(8,5), glm::vec2(14,15 ), 5);
 	a.insert(glm::vec2(8, 5), glm::vec2(8,-17 ), 16);
 	a.insert(glm::vec2(8, 5), glm::vec2(16,-17 ),18 );
-
 	//8
 	a.insert(glm::vec2(8,-17), glm::vec2(16, -17), 2);
-
 	//9
 	a.insert(glm::vec2(14,15 ), glm::vec2(16,-17 ), 21);
+	//10 (16,-17)
 	
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 	
-	glutInitWindowSize(800, 800);
+	glutInitWindowSize(WIDTH, HEIGHT);
 	glutInitWindowPosition(0, 0);
 	glutCreateWindow("grafo");
 	
@@ -90,14 +82,12 @@ int main(int argc, char **argv)
 	glutReshapeFunc(&window_reshape);	
 	glutMouseFunc(&callback_mouse);
 
-	glutKeyboardFunc(&window_key);
-	
+	glutKeyboardFunc(&window_key);	
 	
 	//function called on each frame
 	glutIdleFunc(&window_idle);
 
 	glutMainLoop();
-
 
 	return 1;
 }
@@ -134,6 +124,8 @@ GLvoid window_reshape(GLsizei width, GLsizei height)
 {
 	glViewport(0, 0, width, height);
 
+	WIDTH = width;
+	HEIGHT = height;
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
@@ -162,7 +154,9 @@ GLvoid callback_mouse(int button, int state, int x, int y)
 {
 	if (state == GLUT_DOWN && button == GLUT_LEFT_BUTTON)
 	{
-		
+		float coordX = (x - WIDTH*0.5) / (WIDTH*0.5);
+		float coordY = (HEIGHT*0.5 - y) / (HEIGHT*0.5);		
+		a.setPoint(coordX * 30, coordY * 30);		
 	}
 }
 

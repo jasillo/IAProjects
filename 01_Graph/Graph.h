@@ -8,6 +8,8 @@
 #include <GL\freeglut.h>
 #include <GL\glut.h>
 
+#include <iostream>
+
 using namespace std;
 
 class Graph
@@ -17,13 +19,16 @@ public:
 	~Graph();	
 	bool insert(glm::vec2 a, glm::vec2 b, float w);	
 	void draw();
+	void setPoint(float x, float y);
 
 private:
 	vector<Edge *> myEdges;
 	vector<Node *> myNodes;
-
+	Node * startNode;
+	Node * endNode;
 
 	Node* findNode(glm::vec2 a);
-
+	void deepSearch();
+	void aStarSearch();
 };
 
