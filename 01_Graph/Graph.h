@@ -8,6 +8,9 @@
 #include <GL\freeglut.h>
 #include <GL\glut.h>
 
+#include <sstream>
+#include <iomanip>
+
 #include <iostream>
 #include <queue>
 
@@ -23,6 +26,7 @@ public:
 	void setPoint(float x, float y);
 	void deepSearch();
 	void aStarSearch();
+	void glString(const std::string str, void* );
 
 private:
 	vector<Edge *> myEdges;

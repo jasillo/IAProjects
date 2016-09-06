@@ -48,6 +48,14 @@ bool Graph::insert(glm::vec2 a, glm::vec2 b, float w)
 	return true;
 }
 
+void Graph::glString(const std::string str, void* font = GLUT_BITMAP_8_BY_13)
+{
+	for (size_t i = 0; i < str.size(); ++i)
+	{
+		glutBitmapCharacter(font, str[i]);
+	}
+}
+
 void Graph::draw()
 {
 	//glutSolidSphere(1, 10, 10);
@@ -63,15 +71,23 @@ void Graph::draw()
 		glutSolidSphere(2, 15, 15);
 
 		
-		//glRasterPos2f(10,1);
-		//gluPerspective(10, 10, 10, 10);
+
 		glColor3f(0,1,0);
-		glRasterPos2f(0,2);
-		//glTranslatef(p.x, p.y+2, 0);
-		//glColor3f(0,50,0);
-		
+		/*glRasterPos2f(0,2);		
 		glutBitmapCharacter(GLUT_BITMAP_9_BY_15,(int) 256);
-		glutBitmapCharacter(GLUT_BITMAP_9_BY_15,(int) 30);
+		glutBitmapCharacter(GLUT_BITMAP_9_BY_15,(int) 30);*/
+
+		//glColor3ub(255, 255, 255);
+		glRasterPos2i(0, 2);
+		double val_x = p.x;
+		double val_y = p.y;
+		std::ostringstream oss;
+		oss << std::setprecision(17) << val_x << ","<<val_y;
+		//oss << std::setprecision(17) << val_y;
+		glString(oss.str());
+
+
+
 		glPopMatrix();
 	}
 
@@ -87,18 +103,21 @@ void Graph::draw()
 		glm::vec2 p2 = e->getNode(1);
 
 		
-	   	glm::vec2 r = p1+p2;
-		r.x = r.x / 2;
-		r.y = r.y / 2;
-		/*glPushMatrix();		
-		glRasterPos2f(20,r.y+2);
-		glutBitmapCharacter(GLUT_BITMAP_9_BY_15,55);
-		// glTranslatef(r.x,r.y+2,0);
-		//
-		glPopMatrix();*/
+
 
 		glVertex3f(p1.x, p1.y, 0);
 		glVertex3f(p2.x, p2.y, 0);
+
+		glm::vec2 r = p1 + p2;
+		r.x = r.x / 2;
+		r.y = r.y / 2;
+		///*glPushMatrix();	
+		glColor3f(0, 1, 0);
+		glRasterPos2i(0, 2);
+		glutBitmapCharacter(GLUT_BITMAP_9_BY_15, 55);
+		// glTranslatef(r.x,r.y+2,0);
+		//
+		//glPopMatrix();*/
 		
 	}
 	glEnd();
