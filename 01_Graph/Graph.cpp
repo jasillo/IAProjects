@@ -61,6 +61,17 @@ void Graph::draw()
 		glPushMatrix();
 		glTranslatef(p.x,p.y,0);
 		glutSolidSphere(2, 15, 15);
+
+		
+		//glRasterPos2f(10,1);
+		//gluPerspective(10, 10, 10, 10);
+		glColor3f(0,1,0);
+		glRasterPos2f(0,2);
+		//glTranslatef(p.x, p.y+2, 0);
+		//glColor3f(0,50,0);
+		
+		glutBitmapCharacter(GLUT_BITMAP_9_BY_15,(int) 256);
+		glutBitmapCharacter(GLUT_BITMAP_9_BY_15,(int) 30);
 		glPopMatrix();
 	}
 
@@ -74,7 +85,18 @@ void Graph::draw()
 			glColor3f(1, 1, 1);
 		glm::vec2 p1 = e->getNode(0);
 		glm::vec2 p2 = e->getNode(1);
+
 		
+	   	glm::vec2 r = p1+p2;
+		r.x = r.x / 2;
+		r.y = r.y / 2;
+		/*glPushMatrix();		
+		glRasterPos2f(20,r.y+2);
+		glutBitmapCharacter(GLUT_BITMAP_9_BY_15,55);
+		// glTranslatef(r.x,r.y+2,0);
+		//
+		glPopMatrix();*/
+
 		glVertex3f(p1.x, p1.y, 0);
 		glVertex3f(p2.x, p2.y, 0);
 		
