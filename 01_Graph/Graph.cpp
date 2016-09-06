@@ -185,16 +185,60 @@ void Graph::deepSearch()
 			e->selected = true;
 			cost += e->getDistance();
 		}
+		cout << "costo = " << cost << endl;
 	}
-	cout << "costo = " << cost << endl;
+	
 }
 
 void Graph::aStarSearch()
 {
 	if (!startNode || !endNode)
 		return;
-	Node* n1 = startNode;
-	
+	for (Edge *e : myEdges)
+		e->selected = false;
+	for (Node *n : myNodes)
+		n->visited = false;
+
+	vector<Node*> opened;
+	for (int i = 0; i < myNodes.size(); ++i) {
+		myNodes[i]->ancestor = nullptr;
+		myNodes[i]->weight = 1000000;
+		myNodes[i]->distanceToFinal = glm::length(glm::distance(endNode->getData(), myNodes[i]->getData()));
+	}
+	startNode->weight = 0;
+	opened.push_back(startNode);
+
+	while (!opened.empty() && opened[0] != endNode) {
+		Node * father = opened[0];
+		opened.erase(opened.begin());
+		vector<Edge*> ve = father->getEdges();		
+		father->visited = true;
+		
+		for (Edge *e : ve) {
+			Node *n = e->getNodeDiferent(father);
+			if (!n->visited) {
+				opened.push_back(n);
+				float w = father->weight + e->getDistance();
+				if (w < n->weight) {
+					n->weight = w;
+					n->ancestor = father;
+				}
+				updateVector(&opened);
+			}			
+		}			
+	}
+
+	//existe solucion
+	if (opened[0] == endNode) {
+		Node *n1 = endNode;
+		while (n1->ancestor) {
+			Node *n2 = n1->ancestor;
+			Edge* e = n2->findEdge(n1);
+			e->selected = true;
+			n1 = n2;
+		}
+		cout << "costo = " << opened[0]->weight << endl;
+	}
 }
 
 Node * Graph::findNode(glm::vec2 a)
@@ -204,6 +248,17 @@ Node * Graph::findNode(glm::vec2 a)
 			return n;
 	}
 	return nullptr;
+}
+
+/* se actualiza el valor de pesos con respecto al nodo 'id'
+que tiene un menor peso + la distancia al nodo final*/
+void Graph::updateVector(vector<Node*>* v){		
+	for (int i = v->size()-1 ; i > 0; --i) {		
+		if (v->at(i)->weight + v->at(i)->distanceToFinal < v->at(i - 1)->weight + v->at(i - 1)->distanceToFinal)
+			swap(v->at(i), v->at(i - 1));
+		else
+			return;
+	}
 }
 
 

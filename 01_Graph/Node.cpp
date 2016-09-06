@@ -34,6 +34,11 @@ void Node::addEdge(Edge * e)
 	myEdges.push_back(e);
 }
 
+vector<Edge*> Node::getEdges()
+{
+	return myEdges;
+}
+
 Node * Node::getNodeNotSelected()
 {
 	for (Edge *e : myEdges) {

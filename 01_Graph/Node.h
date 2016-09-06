@@ -13,6 +13,7 @@ class Node
 public:
 	Node(glm::vec2 d);
 	~Node();
+
 	Edge* findEdge(Node* a);
 	void clear();
 	glm::vec2 getData();
@@ -20,6 +21,11 @@ public:
 
 	bool selected;
 	bool visited;
+	Node *ancestor;
+	float weight;
+	float distanceToFinal;
+	vector<Edge*> getEdges();
+
 	Node* getNodeNotSelected();
 private:
 	glm::vec2 data;

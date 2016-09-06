@@ -13,6 +13,7 @@
 
 #include <iostream>
 #include <queue>
+#include <tuple>
 
 using namespace std;
 
@@ -35,5 +36,6 @@ private:
 	Node * endNode;
 
 	Node* findNode(glm::vec2 a);	
+	void updateVector(vector<Node*> * v);
 };
 

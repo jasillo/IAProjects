@@ -112,6 +112,9 @@ GLvoid window_key(unsigned char key, int x, int y)
 	case 'p':
 		a.deepSearch();
 		break;
+	case 'a':
+		a.aStarSearch();
+		break;
 	default:
 		printf("La touche %d non active.\n", key);
 		break;
