@@ -68,16 +68,9 @@ void Graph::draw()
 		glm::vec2 p = n->getData();
 		glPushMatrix();
 		glTranslatef(p.x,p.y,0);
-		glutSolidSphere(2, 15, 15);
-
-		
+		glutSolidSphere(2, 15, 15);		
 
 		glColor3f(0,1,0);
-		/*glRasterPos2f(0,2);		
-		glutBitmapCharacter(GLUT_BITMAP_9_BY_15,(int) 256);
-		glutBitmapCharacter(GLUT_BITMAP_9_BY_15,(int) 30);*/
-
-		//glColor3ub(255, 255, 255);
 		glRasterPos2i(0, 2);
 		double val_x = p.x;
 		double val_y = p.y;
@@ -86,13 +79,31 @@ void Graph::draw()
 		//oss << std::setprecision(17) << val_y;
 		glString(oss.str());
 
-
-
 		glPopMatrix();
 	}
 
-	glLineWidth(2);
-		
+	/*
+	glm::vec2 r;
+	r.x = (p1.x + p2.x) / 2;
+	r.y = (p1.y + p2.y) / 2;
+	//glPushMatrix();
+	double val_xx = r.x;
+	double val_yy = r.y;
+	glTranslatef(val_xx, val_yy, 0);
+	glColor3f(0, 1, 0);
+	glRasterPos2i(0, 2);
+
+	std::ostringstream oss;
+	oss << std::setprecision(17) << val_xx << "," << val_yy;
+	//oss << std::setprecision(17) << val_y;
+	glString(oss.str());
+	//glPopMatrix();
+	*/
+	
+
+	
+
+	glLineWidth(2);		
 	glBegin(GL_LINES);
 	for (Edge* e : myEdges) {
 		if (e->selected)
@@ -102,25 +113,29 @@ void Graph::draw()
 		glm::vec2 p1 = e->getNode(0);
 		glm::vec2 p2 = e->getNode(1);
 
-		
-
-
 		glVertex3f(p1.x, p1.y, 0);
 		glVertex3f(p2.x, p2.y, 0);
-
-		glm::vec2 r = p1 + p2;
-		r.x = r.x / 2;
-		r.y = r.y / 2;
-		///*glPushMatrix();	
-		glColor3f(0, 1, 0);
-		glRasterPos2i(0, 2);
-		glutBitmapCharacter(GLUT_BITMAP_9_BY_15, 55);
-		// glTranslatef(r.x,r.y+2,0);
-		//
-		//glPopMatrix();*/
-		
 	}
 	glEnd();
+
+	for (Edge* ee : myEdges) {
+		glm::vec2 p11 = ee->getNode(0);
+		glm::vec2 p22 = ee->getNode(1);
+
+
+		glPushMatrix();
+		double val_xx = (p11.x + p22.x)/2.0;
+		double val_yy = (p11.y + p22.y)/2.0;
+		glTranslatef(val_xx, val_yy, 0);
+		glColor3f(0, 1, 0);
+		glRasterPos2i(0, 2);
+
+		std::ostringstream oss;
+		oss << std::setprecision(17) << ee->getDistance();
+		//oss << std::setprecision(17) << val_y;
+		glString(oss.str());
+		glPopMatrix();
+	}
 
 }
 
