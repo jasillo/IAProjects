@@ -11,6 +11,42 @@ int Node::validate(short c, short r)
 	return -1;
 }
 
+int Node::minmax(short alpha, short betha, int *p)
+{
+	if (children.empty()) {
+		return countPieces();		
+	}
+	int temp;
+	
+	for (int i = 0; i < children.size(); ++i) {
+		short value = children[i]->minmax(alpha, betha, &temp);
+		//std::cout << value<<std::endl;
+		if (value < alpha || value > betha)
+			i=children.size();
+		else {
+			if (player)//minimizar
+			{
+				if (betha > value) {
+					betha = value;
+					*p = i;
+				}
+			}				
+			else //maximizar
+			{
+				if (alpha < value) {
+					alpha = value;
+					*p = i;
+				}
+			}				
+		}		
+	}
+	
+	if (player)
+		return betha;
+	else
+		return alpha;
+}
+
 
 Node::Node()
 {	
@@ -45,12 +81,7 @@ Node::Node(unsigned short b[8][8])
 
 
 Node::~Node()
-{
-	for (Node* n : children) {
-		Node* temp = n;
-		n = nullptr;
-		delete temp;
-	}		
+{	
 }
 
 unsigned int Node::countPieces()
@@ -113,13 +144,16 @@ void Node::pieceMove(unsigned short c, unsigned short r, unsigned short type)
 		n->board[c][r] = 0;
 		n->player = !player;
 	}
-	else if (t == 3 && validate(c + 2 * dc[0], r + 2 * dr[0]) == 0) {
-		Node *n = new Node(board);
-		children.push_back(n);
-		n->board[c + 2*dc[type]][r + 2*dr[type]] = n->board[c][r];
-		n->board[c][r] = 0;
-		n->board[c + dc[type]][r + dr[type]] = 0;
-		n->player = !player;
-	}
+	else if ((player && t == 3) || (!player && t == 1))
+	{
+		if (validate(c + 2 * dc[type], r + 2 * dr[type]) == 0) {
+			Node *n = new Node(board);
+			children.push_back(n);
+			n->board[c + 2*dc[type]][r + 2*dr[type]] = n->board[c][r];
+			n->board[c][r] = 0;
+			n->board[c + dc[type]][r + dr[type]] = 0;
+			n->player = !player;
+		}
+	}	
 }
 
