@@ -16,7 +16,6 @@ Plotter::Plotter(size_t w, size_t h):width(w),height(h)
 	factor = (width - 2 * margin) / 100.0;
 	limit_x = factor * 100 + margin;
 	limit_y = 100 * (height / width) * factor + margin;
-	std::cout << limit_x << " " << limit_y << std::endl;
 }
 
 
@@ -105,7 +104,6 @@ void Plotter::plot(std::vector<point_t>* v)
 	for (int i = 0; i < v->size(); ++i)	{
 		int x = v->at(i).x * factor + margin;
 		int y = height - (v->at(i).y * factor + margin);
-		std::cout << x << " " << y << std::endl;
 		if (x < limit_x && y < limit_y && x > margin && y > margin) {
 			size_t index = y*width +x;
 			bitmap[index].red = 0;

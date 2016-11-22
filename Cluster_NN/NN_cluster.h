@@ -18,7 +18,7 @@ private:
 
 public:
 	CNN_cluster() {
-		alpha = 0.8f;
+		alpha = 0.10f;
 	};
 	~CNN_cluster() {};
 

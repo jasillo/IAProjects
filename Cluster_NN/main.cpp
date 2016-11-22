@@ -7,6 +7,7 @@
 #include <glm/vec2.hpp>
 #include <glm/gtc/random.hpp>
 #include <fstream>
+#include "Plotter.h"
 
 void llenar_int_vec(std::vector<glm::vec2> &v,int n_centros,int min,int max)
 {
@@ -19,7 +20,7 @@ void llenar_int_vec(std::vector<glm::vec2> &v,int n_centros,int min,int max)
 		x = dis(gen);
 		y = dis(gen);
 		r = dis(gen)%50;		
-		std::cout <<r <<" "<< x << " "<<y;
+		//std::cout <<r <<" "<< x << " "<<y;
 		if (x + r > max)//{ x = x - ((x + r) - (max));}
 			x = x - (r -(max-x));
 		if (x - r < min)
@@ -47,7 +48,7 @@ void llenar_int_vec(std::vector<glm::vec2> &v,int n_centros,int min,int max)
 		}
 		//v.push_back(glm::vec2(dis(gen), dis(gen)));
 	}
-	std::cout << std::endl;
+	//std::cout << std::endl;
 }
 void imprime_int_vec(std::vector<glm::vec2> &v)
 {
@@ -63,16 +64,22 @@ int main()
 	std::vector<glm::vec2> lista;
 	
 	llenar_int_vec(lista, 10, 1, 99);
-	imprime_int_vec(lista);
+	//imprime_int_vec(lista);
 	/*lista.push_back(glm::vec2(1, 1));
-	lista.push_back(glm::vec2(2, 2));
+	lista.push_back(glm::vec2(6, 2));
 	lista.push_back(glm::vec2(3, 3));
 	lista.push_back(glm::vec2(1, 3));
-	lista.push_back(glm::vec2(1, 4));
+	lista.push_back(glm::vec2(2, 4));
 	lista.push_back(glm::vec2(1, 2));
-	lista.push_back(glm::vec2(3, 1));*/
+	lista.push_back(glm::vec2(2, 1));*/
 
 	CNN_cluster my_clasificator;
-	my_clasificator.cluster(&lista,3.0);
+	std::vector<int> index = my_clasificator.cluster(&lista,10.0);
+	Plotter pl(400,400);
+	pl.plot(&lista);
+	for (int i = 0; i < index.size(); ++i) {
+		pl.Circumference(lista.at(index[i]),10.0);
+	}
+	pl.savePng("puntos.png");
 	return 0;
 }

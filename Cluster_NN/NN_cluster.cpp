@@ -11,16 +11,19 @@ void CNN_cluster::calculate_initialActivitie(std::vector<Tpoint>* points, float 
 
 	for (int i = 0; i < tam*tam; ++i)
 		matrixConections[i] = 0;
-	for (int i = 0; i < tam; ++i)
+
+	for (int i = 0; i < tam; ++i) {
 		neuronsActivities[i] = 0;
+		newActivities[i] = 0;
+	}		
 
 	for (int i = 0; i < tam; ++i) {
 		for (int j = i + 1; j < tam; ++j) {
 			float distance = glm::length(glm::distance(points->at(i), points->at(j)));
 			if (distance <= radius) {
-				matrixConections[i * tam + j] = distance;
-				matrixConections[j * tam + i] = distance;
-				float weight = squaredRadius / (distance*distance - squaredRadius);
+				float weight = squaredRadius / (distance*distance + squaredRadius);
+				matrixConections[i * tam + j] = weight;
+				matrixConections[j * tam + i] = weight;				
 				neuronsActivities[i] += weight;
 				neuronsActivities[j] += weight;
 			}
@@ -30,24 +33,28 @@ void CNN_cluster::calculate_initialActivitie(std::vector<Tpoint>* points, float 
 
 
 bool CNN_cluster::calculate_newActivities()
-{
-	bool active = false;
-	for (int i = 0; i < tam; ++i) {
-		float sum = 0;
-		for (int j = 0; j < tam; ++j) {			
-			if (neuronsActivities[i] > 0 && matrixConections[i * tam + j] > 0) {
-				sum += matrixConections[i * tam + j] * (neuronsActivities[i] - neuronsActivities[j]);
-				active = true;
-			}				
-		}
-		newActivities[i] = neuronsActivities[i] + alpha * sum;
-	}
-
+{	
 	for (int i = 0; i < tam; ++i) {		
-		if (newActivities[i] < 0)
+		if (neuronsActivities[i] > 0) {
+			float sum = 0;
+			for (int j = 0; j < tam; ++j) {			
+				if (matrixConections[i * tam + j] > 0 && neuronsActivities[j] > 0) {
+					sum += matrixConections[i * tam + j] * (neuronsActivities[i] - neuronsActivities[j]);
+				}				
+			}
+			newActivities[i] = neuronsActivities[i] + alpha * sum;
+		}		
+		
+	}
+	bool active = false;
+	for (int i = 0; i < tam; ++i) {		
+		if (newActivities[i] <= 0) {
 			neuronsActivities[i] = 0;
-		else 
+		}
+		else if (neuronsActivities[i] != newActivities[i]) {
 			neuronsActivities[i] = newActivities[i];
+			active = true;
+		}
 	}
 	return active;
 }
