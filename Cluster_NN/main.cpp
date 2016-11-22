@@ -8,7 +8,7 @@
 #include <glm/gtc/random.hpp>
 #include <fstream>
 
-void llenar_int_vec(vector<glm::vec2> &v,int n_centros,int min,int max)
+void llenar_int_vec(std::vector<glm::vec2> &v,int n_centros,int min,int max)
 {
 	int x,y,r;
 	std::random_device rd;
@@ -19,7 +19,7 @@ void llenar_int_vec(vector<glm::vec2> &v,int n_centros,int min,int max)
 		x = dis(gen);
 		y = dis(gen);
 		r = dis(gen)%50;		
-		cout <<r <<" "<< x << " "<<y;
+		std::cout <<r <<" "<< x << " "<<y;
 		if (x + r > max)//{ x = x - ((x + r) - (max));}
 			x = x - (r -(max-x));
 		if (x - r < min)
@@ -47,11 +47,11 @@ void llenar_int_vec(vector<glm::vec2> &v,int n_centros,int min,int max)
 		}
 		//v.push_back(glm::vec2(dis(gen), dis(gen)));
 	}
-	cout << endl;
+	std::cout << std::endl;
 }
-void imprime_int_vec(vector<glm::vec2> &v)
+void imprime_int_vec(std::vector<glm::vec2> &v)
 {
-	ofstream w("puntos.txt");
+	std::ofstream w("puntos.txt");
 	if (w.is_open()){
 		for (auto i : v){w<< i.x << " " << i.y <<"\n";}
 		w.close();
