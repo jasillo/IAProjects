@@ -74,6 +74,24 @@ void imprime_vec(vector<glm::vec2> &v)
 		w.close();
 	}*/	
 }
+void lee_vec(vector<glm::vec2> &v)
+{
+	std::string linea;
+	std::string::size_type sz;
+	ifstream r("puntos.txt");
+	int i = 0;
+	if (r.is_open())
+	{
+		while (getline(r, linea)) {
+			v[i].x = std::stof(linea,&sz);
+			v[i].y = std::stof(linea.substr(sz));
+			i++;
+		}
+		r.close();
+	}
+	else cout << "fallo a leer";
+
+}
 
 
 int main() 
@@ -81,6 +99,7 @@ int main()
 	std::vector<glm::vec2> lista;
 	
 	llenar_int_vec(lista, 10, 50,1, 99);
+	lee_vec(lista);
 	imprime_vec(lista);
 	/*lista.push_back(glm::vec2(1, 1));
 	lista.push_back(glm::vec2(6, 2));
